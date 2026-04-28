@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
 
 const projects = [
   {
@@ -72,75 +74,101 @@ export default function PortfolioSection() {
     : projects.filter(p => p.category === activeCategory)
 
   return (
-    <section id="portfolio" className="py-24 bg-background">
+    <section id="portfolio" className="py-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Our Work</h2>
-          <h3 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-6 text-pretty">
-            Explore Our Projects
-          </h3>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Each project tells a unique story of transformation and elegance. Discover how we turn spaces into beautiful expressions of our clients' lifestyle.
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em] mb-4">Our Work</h2>
+            <h3 className="font-serif text-5xl sm:text-6xl font-bold text-foreground leading-tight">
+              A Gallery of <span className="text-primary italic">Refined</span> Spaces.
+            </h3>
+          </div>
+          <p className="text-lg text-muted-foreground max-w-sm font-light leading-relaxed">
+            Each project tells a unique story of transformation and elegance. Explore our curated selection of bespoke interiors.
           </p>
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <div className="flex flex-wrap gap-2 mb-16 pb-4 border-b border-border/40">
           {categories.map(category => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`px-8 py-3 rounded-full text-sm font-bold transition-all relative ${
                 activeCategory === category
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-foreground hover:bg-secondary/80'
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               {category}
+              {activeCategory === category && (
+                <motion.div 
+                  layoutId="activeFilter"
+                  className="absolute inset-0 bg-primary/10 rounded-full -z-10"
+                />
+              )}
             </button>
           ))}
         </div>
 
         {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProjects.map(project => (
-            <div
-              key={project.id}
-              className="group cursor-pointer overflow-hidden rounded-lg border border-border bg-card hover:shadow-lg transition-all duration-300"
-            >
-              {/* Image Container */}
-              <div className="relative h-64 overflow-hidden bg-secondary">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
+        <motion.div 
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map(project => (
+              <motion.div
+                layout
+                key={project.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                className="group relative cursor-pointer"
+              >
+                {/* Image Container */}
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-secondary shadow-lg">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 delay-100">
+                      <ArrowUpRight className="w-6 h-6 text-primary" />
+                    </div>
+                  </div>
+                </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
-                  {project.category}
-                </p>
-                <h4 className="font-serif text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                  {project.title}
-                </h4>
-                <p className="text-sm text-muted-foreground">
-                  {project.description}
-                </p>
-              </div>
+                {/* Content */}
+                <div className="mt-6 space-y-2 px-2">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-bold text-primary uppercase tracking-[0.2em]">
+                      {project.category}
+                    </p>
+                    <div className="w-2 h-2 rounded-full bg-primary/20" />
+                  </div>
+                  <h4 className="font-serif text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h4>
+                  <p className="text-muted-foreground font-light leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
-              {/* Hover CTA */}
-              <div className="px-5 pb-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button className="w-full text-sm font-medium text-primary hover:text-accent transition-colors">
-                  View Details →
-                </button>
-              </div>
-            </div>
-          ))}
+        {/* View All CTA */}
+        <div className="mt-20 text-center">
+          <button className="px-12 py-5 bg-foreground text-background rounded-full font-bold hover:bg-primary transition-colors shadow-2xl">
+            View All Projects
+          </button>
         </div>
       </div>
     </section>

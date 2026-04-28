@@ -83,11 +83,11 @@ export default function ContactSection() {
             {/* Hours */}
             <div>
               <h4 className="font-serif text-xl font-bold text-foreground mb-3">Hours</h4>
-              <p className="text-muted-foreground space-y-1">
+              <div className="text-muted-foreground space-y-1">
                 <div>Monday - Friday: 9:00 AM - 6:00 PM</div>
                 <div>Saturday: 10:00 AM - 4:00 PM</div>
                 <div>Sunday: Closed</div>
-              </p>
+              </div>
             </div>
           </div>
 
