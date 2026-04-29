@@ -1,176 +1,99 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
-
-const projects = [
-  {
-    id: 1,
-    title: 'Modern Living Room',
-    category: 'Living Spaces',
-    image: '/portfolio-1.jpg',
-    description: 'Contemporary minimalist design with warm, inviting elements'
-  },
-  {
-    id: 2,
-    title: 'Serene Bedroom',
-    category: 'Bedrooms',
-    image: '/portfolio-2.jpg',
-    description: 'Peaceful sanctuary with elegant furnishings and soft lighting'
-  },
-  {
-    id: 3,
-    title: 'Gourmet Kitchen',
-    category: 'Kitchens',
-    image: '/portfolio-3.jpg',
-    description: 'Sophisticated culinary space with marble finishes'
-  },
-  {
-    id: 4,
-    title: 'Luxury Bathroom',
-    category: 'Bathrooms',
-    image: '/portfolio-4.jpg',
-    description: 'Spa-like retreat with premium materials and finishes'
-  },
-  {
-    id: 5,
-    title: 'Home Office',
-    category: 'Workspaces',
-    image: '/portfolio-5.jpg',
-    description: 'Productive workspace combining comfort and functionality'
-  },
-  {
-    id: 6,
-    title: 'Open Concept Living',
-    category: 'Living Spaces',
-    image: '/portfolio-6.jpg',
-    description: 'Flowing spaces with natural light and modern aesthetics'
-  },
-  {
-    id: 7,
-    title: 'Grand Entryway',
-    category: 'Foyers',
-    image: '/portfolio-7.jpg',
-    description: 'Impressive first impression with elegant details'
-  },
-  {
-    id: 8,
-    title: 'Reading Nook',
-    category: 'Specialty Spaces',
-    image: '/portfolio-8.jpg',
-    description: 'Cozy corner perfect for relaxation and contemplation'
-  }
-]
-
-const categories = ['All', 'Living Spaces', 'Bedrooms', 'Kitchens', 'Bathrooms', 'Workspaces', 'Foyers', 'Specialty Spaces']
+import React from 'react'
+import { motion } from 'framer-motion'
+import { ArrowUpRight, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import { projects } from '@/lib/projects'
 
 export default function PortfolioSection() {
-  const [activeCategory, setActiveCategory] = useState('All')
-
-  const filteredProjects = activeCategory === 'All'
-    ? projects
-    : projects.filter(p => p.category === activeCategory)
+  const previewProjects = projects.slice(0, 6)
 
   return (
-    <section id="portfolio" className="py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="portfolio" className="py-16 md:py-32 bg-background overflow-hidden px-5">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
           <div className="max-w-2xl">
-            <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em] mb-4">Our Work</h2>
-            <h3 className="font-serif text-5xl sm:text-6xl font-bold text-foreground leading-tight">
+            <h2 className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-4">Featured Projects</h2>
+            <h3 className="font-serif text-3xl sm:text-6xl font-bold text-foreground leading-tight">
               A Gallery of <span className="text-primary italic">Refined</span> Spaces.
             </h3>
           </div>
-          <p className="text-lg text-muted-foreground max-w-sm font-light leading-relaxed">
-            Each project tells a unique story of transformation and elegance. Explore our curated selection of bespoke interiors.
-          </p>
-        </div>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-2 mb-16 pb-4 border-b border-border/40">
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-8 py-3 rounded-full text-sm font-bold transition-all relative ${
-                activeCategory === category
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
+          <div className="flex flex-col gap-6">
+            <p className="text-base text-muted-foreground max-w-sm font-light leading-relaxed">
+              Each project tells a unique story of transformation and elegance. Explore our curated selection of bespoke interiors.
+            </p>
+            <Link 
+              href="/works"
+              className="group flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all text-sm"
             >
-              {category}
-              {activeCategory === category && (
-                <motion.div 
-                  layoutId="activeFilter"
-                  className="absolute inset-0 bg-primary/10 rounded-full -z-10"
-                />
-              )}
-            </button>
-          ))}
+              View All Works <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
         </div>
 
         {/* Portfolio Grid */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map(project => (
-              <motion.div
-                layout
-                key={project.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4 }}
-                className="group relative cursor-pointer"
-              >
+        <div className="grid grid-cols-2 lg:grid-cols-2 gap-4 md:gap-10">
+          {previewProjects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className={`${index === 0 ? 'col-span-2 lg:col-span-2 mb-8 md:mb-16' : 'col-span-1'}`}
+            >
+              <Link href={`/works/${project.slug}`} className="group block relative">
                 {/* Image Container */}
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-secondary shadow-lg">
+                <div className={`relative ${index === 0 ? 'aspect-[16/9]' : 'aspect-[4/5]'} overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] bg-secondary shadow-lg`}>
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    sizes={index === 0 ? "100vw" : "(max-width: 768px) 50vw, 33vw"}
+                    className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-in-out"
+                    loading="lazy"
                   />
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 delay-100">
-                      <ArrowUpRight className="w-6 h-6 text-primary" />
-                    </div>
+                  <div className="absolute inset-0 bg-primary/10 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                    <span className="px-6 py-3 md:px-10 md:py-4 bg-white text-primary font-bold uppercase tracking-[0.2em] text-[10px] md:text-sm rounded-full shadow-2xl scale-90 group-hover:scale-100 transition-all duration-500">
+                      View Project
+                    </span>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="mt-6 space-y-2 px-2">
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs font-bold text-primary uppercase tracking-[0.2em]">
-                      {project.category}
-                    </p>
-                    <div className="w-2 h-2 rounded-full bg-primary/20" />
-                  </div>
-                  <h4 className="font-serif text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                <div className={`mt-4 ${index === 0 ? 'md:mt-10' : 'md:mt-8'} space-y-1 md:space-y-3 px-1 md:px-2 ${index === 0 ? 'text-center max-w-4xl mx-auto' : ''}`}>
+                  <p className="text-[10px] md:text-xs font-bold text-primary uppercase tracking-[0.2em]">
+                    {project.category}
+                  </p>
+                  <h4 className={`font-serif ${index === 0 ? 'text-2xl sm:text-5xl lg:text-7xl' : 'text-lg md:text-3xl'} font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1`}>
                     {project.title}
                   </h4>
-                  <p className="text-muted-foreground font-light leading-relaxed">
-                    {project.description}
-                  </p>
+                  {index === 0 && (
+                    <p className="text-muted-foreground font-light text-base md:text-xl max-w-2xl mx-auto mt-4 line-clamp-2 hidden md:block">
+                      {project.description}
+                    </p>
+                  )}
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
 
-        {/* View All CTA */}
-        <div className="mt-20 text-center">
-          <button className="px-12 py-5 bg-foreground text-background rounded-full font-bold hover:bg-primary transition-colors shadow-2xl">
-            View All Projects
-          </button>
+        {/* Bottom CTA */}
+        <div className="mt-16 md:mt-24 text-center">
+          <Link 
+            href="/works"
+            className="inline-flex items-center gap-3 px-12 py-5 bg-foreground text-background rounded-full font-bold hover:bg-primary transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 min-h-[56px]"
+          >
+            Explore All Works <ArrowRight className="w-5 h-5" />
+          </Link>
         </div>
       </div>
     </section>
   )
 }
+
