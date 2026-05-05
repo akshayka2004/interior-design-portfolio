@@ -10,9 +10,9 @@ import Footer from '@/components/Footer'
 
 export default function AboutPage() {
   const stats = [
-    { label: 'Years of Excellence', value: '15+', icon: Award },
-    { label: 'Projects Completed', value: '250+', icon: HomeIcon },
-    { label: 'Happy Clients', value: '180+', icon: Users },
+    { label: 'Years of Excellence', value: '28+', icon: Award },
+    { label: 'Projects Completed', value: '70+', icon: HomeIcon },
+    { label: 'Happy Clients', value: '60+', icon: Users },
   ]
 
   const services = [
@@ -59,8 +59,8 @@ export default function AboutPage() {
               "We believe that a well-designed space is the ultimate form of self-care. It's about creating a silent dialogue between the architecture and those who inhabit it."
             </blockquote>
             <div className="space-y-2">
-              <p className="text-sm font-bold uppercase tracking-widest text-primary">Alexandra Vance</p>
-              <p className="text-xs text-muted-foreground uppercase tracking-widest">Founder & Principal Designer</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-primary">Alliance Furnishing</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-widest">Principal Design Team</p>
             </div>
             <div className="w-20 h-[1px] bg-primary mx-auto opacity-30" />
           </motion.div>
@@ -79,10 +79,10 @@ export default function AboutPage() {
             >
               <h2 className="text-xs font-bold text-primary uppercase tracking-[0.3em]">The Studio Story</h2>
               <h3 className="font-serif text-3xl md:text-5xl font-bold text-foreground leading-tight">
-                Crafting Elegance Since <span className="italic text-primary">2009</span>.
+                Crafting Elegance Since <span className="italic text-primary">1998</span>.
               </h3>
               <p className="text-base md:text-xl text-muted-foreground font-light leading-relaxed">
-                Founded on the principle that luxury should be felt as much as it is seen, our studio has spent over a decade redefining the boundaries of interior design in Manhattan and beyond.
+                Founded on the principle that luxury should be felt as much as it is seen, Alliance Furnishing has spent over 28 years redefining the boundaries of interior and acoustic design.
               </p>
               <p className="text-base md:text-lg text-muted-foreground font-light leading-relaxed">
                 Our approach is deeply personal. We believe that every room should tell a story—your story. By combining modern innovation with timeless craftsmanship, we create environments that inspire and endure.

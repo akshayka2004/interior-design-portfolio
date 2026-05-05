@@ -15,8 +15,8 @@ const geist = Geist({
 })
 
 export const metadata: Metadata = {
-  title: 'Interior Design Portfolio | Studio Design Co',
-  description: 'Discover elegant and sophisticated interior design solutions tailored to your space. Explore our portfolio of contemporary and timeless design projects.',
+  title: 'Alliance Furnishing | Premium Interior & Acoustic Services',
+  description: 'With over 28 years of excellence, Alliance Furnishing provides bespoke interior and acoustic solutions for residential, commercial, and institutional projects.',
   generator: 'v0.app',
   icons: {
     icon: [

@@ -75,9 +75,30 @@ export default function HeroSection() {
                 Get Consultation
               </Link>
             </div>
+            {/* Hero Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="flex items-center justify-center gap-8 md:gap-16 pt-12 md:pt-16 border-t border-primary/10 mt-8"
+            >
+              <div className="text-center">
+                <p className="text-2xl md:text-4xl font-serif font-bold text-primary">28+</p>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Years of Experience</p>
+              </div>
+              <div className="w-px h-12 bg-primary/10 hidden sm:block" />
+              <div className="text-center">
+                <p className="text-2xl md:text-4xl font-serif font-bold text-primary">70+</p>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Projects Completed</p>
+              </div>
+              <div className="w-px h-12 bg-primary/10 hidden sm:block" />
+              <div className="text-center">
+                <p className="text-2xl md:text-4xl font-serif font-bold text-primary">100%</p>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Client Satisfaction</p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
-
       </div>
     </section>
   )

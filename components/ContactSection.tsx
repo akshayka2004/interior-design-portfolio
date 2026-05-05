@@ -37,10 +37,10 @@ export default function ContactSection() {
   }
 
   const contactInfo = [
-    { icon: Phone, label: 'Phone', value: '+1 (234) 567-8900', href: 'tel:+1234567890' },
-    { icon: Mail, label: 'Email', value: 'hello@studiodesign.com', href: 'mailto:hello@studiodesign.com' },
-    { icon: MapPin, label: 'Studio', value: '123 Design Street, New York, NY 12345', href: '#' },
-    { icon: Clock, label: 'Hours', value: 'Mon - Fri: 9:00 AM - 6:00 PM', href: '#' },
+    { icon: Phone, label: 'Phone', value: '+91 9745309649', href: 'tel:+919745309649' },
+    { icon: Mail, label: 'Email', value: 'alliancefurnishing1@gmail.com', href: 'mailto:alliancefurnishing1@gmail.com' },
+    { icon: MapPin, label: 'Studio', value: 'TC 27/816, ExtraPoliceRoad, Thiruvananthapuram', href: '#' },
+    { icon: Clock, label: 'Hours', value: '8:30 AM to 5:30 PM', href: '#' },
   ]
 
   return (

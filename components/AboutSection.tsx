@@ -29,7 +29,7 @@ export default function AboutSection() {
             </div>
             <div className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl hidden sm:block">
               <div className="text-center">
-                <p className="text-3xl md:text-5xl font-serif font-bold text-primary">15+</p>
+                <p className="text-3xl md:text-5xl font-serif font-bold text-primary">28+</p>
                 <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mt-1 md:mt-2">Years of <br /> Excellence</p>
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function AboutSection() {
               </Link>
               
               <div className="flex items-center gap-4 px-4 py-2 bg-secondary rounded-full hidden md:flex">
-                <span className="text-xs font-bold text-foreground">250+ Projects Completed</span>
+                <span className="text-xs font-bold text-foreground">70+ Projects Completed</span>
               </div>
             </div>
           </motion.div>

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Menu, X, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 
 export default function Header() {
@@ -71,12 +72,17 @@ export default function Header() {
             href="/"
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
-              <span className="text-primary-foreground font-serif font-bold text-xl">S</span>
+            <div className="relative w-12 h-12 overflow-hidden rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <Image 
+                src="/logo.png" 
+                alt="Alliance Furnishing Logo" 
+                fill 
+                className="object-contain bg-white"
+              />
             </div>
             <div>
-              <h1 className="font-serif font-bold text-xl text-primary leading-none">Studio</h1>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mt-1 font-medium">Interior Design</p>
+              <h1 className="font-serif font-bold text-xl text-primary leading-none">ALLIANCE</h1>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mt-1 font-medium">FURNISHING</p>
             </div>
           </Link>
 

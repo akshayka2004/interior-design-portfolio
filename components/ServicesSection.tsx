@@ -15,23 +15,23 @@ import {
 const services = [
   {
     Icon: Home,
-    title: 'Residential Design',
-    description: 'Transform your home with personalized interior design that reflects your style and meets your lifestyle needs.'
+    title: 'Interior Design',
+    description: 'Bespoke residential and commercial interiors tailored to your lifestyle and professional needs.'
   },
   {
     Icon: Building2,
-    title: 'Commercial Spaces',
-    description: 'Create inspiring workplaces and commercial environments that enhance productivity and brand identity.'
+    title: 'Acoustic Solutions',
+    description: 'Expert acoustic treatments for studios, educational institutions, and professional environments.'
   },
   {
     Icon: Paintbrush,
-    title: 'Renovation & Remodeling',
-    description: 'Breathe new life into existing spaces with thoughtful renovations that enhance functionality and beauty.'
+    title: 'Space Planning',
+    description: 'Optimizing your floor plan for maximum efficiency, flow, and aesthetic impact.'
   },
   {
     Icon: Lightbulb,
-    title: 'Consultation Services',
-    description: 'Get expert design advice tailored to your specific needs and vision without the full design project.'
+    title: 'Design Consultation',
+    description: 'Professional guidance on color palettes, materials, and furniture selection.'
   }
 ]
 

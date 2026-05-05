@@ -3,6 +3,7 @@
 import React from 'react'
 import { Instagram, Linkedin, Pin as Pinterest, Facebook, ArrowUp, Send } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -25,16 +26,21 @@ export default function Footer() {
           {/* Brand & Mission */}
           <div className="max-w-md space-y-8 flex flex-col items-center">
             <Link href="/" className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                <span className="text-primary-foreground font-serif font-bold text-2xl">S</span>
+              <div className="relative w-12 h-12 overflow-hidden rounded-xl shadow-lg">
+                <Image 
+                  src="/logo.png" 
+                  alt="Alliance Furnishing Logo" 
+                  fill 
+                  className="object-contain bg-white"
+                />
               </div>
               <div className="text-center">
-                <h3 className="font-serif font-bold text-3xl text-background leading-none">Studio</h3>
-                <p className="text-[10px] text-primary uppercase tracking-[0.3em] mt-1 font-bold">Interior Design</p>
+                <h3 className="font-serif font-bold text-3xl text-background leading-none">ALLIANCE</h3>
+                <p className="text-[10px] text-primary uppercase tracking-[0.3em] mt-1 font-bold">FURNISHING</p>
               </div>
             </Link>
             <p className="text-background/60 leading-relaxed font-light text-base md:text-lg">
-              Dedicated to creating sophisticated sanctuaries through intentional design, light, and architectural harmony since 2009.
+              Dedicated to creating sophisticated sanctuaries through intentional design, light, and architectural harmony since 1998.
             </p>
             <div className="flex gap-6 pt-4 justify-center">
               {[Instagram, Pinterest, Linkedin, Facebook].map((Icon, i) => (
@@ -73,10 +79,10 @@ export default function Footer() {
               <h4 className="text-xs font-bold uppercase tracking-[0.3em] mb-6 text-primary">Expertise</h4>
               <ul className="space-y-4">
                 {[
-                  'Residential',
-                  'Commercial',
-                  'Architecture',
-                  'Renovations'
+                  'Interior Design',
+                  'Acoustic Solutions',
+                  'Space Planning',
+                  'Design Consultation'
                 ].map((item) => (
                   <li key={item}>
                     <Link href="/about" className="text-background/60 hover:text-white transition-colors text-base font-light flex items-center justify-center gap-2 group min-h-[44px]">
@@ -108,7 +114,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-12 border-t border-white/5 flex flex-col items-center gap-8 text-center">
           <p className="text-sm text-background/30 font-light">
-            © {currentYear} Studio Design Portfolio.
+            © {currentYear} Alliance Furnishing.
           </p>
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             <a href="#" className="text-xs text-background/30 hover:text-white transition-colors min-h-[44px] flex items-center">Privacy</a>
