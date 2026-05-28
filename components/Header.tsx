@@ -70,16 +70,19 @@ export default function Header() {
           {/* Logo */}
           <Link 
             href="/"
-            className="flex items-center cursor-pointer group"
+            className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="relative h-12 w-36 md:h-14 md:w-44 group-hover:opacity-90 transition-opacity duration-300">
+            <div className="relative w-12 h-12 overflow-hidden rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Image 
                 src="/logo.png" 
                 alt="Alliance Furnishing Logo" 
                 fill 
-                className="object-contain object-left"
-                priority
+                className="object-contain bg-white"
               />
+            </div>
+            <div>
+              <h1 className="font-serif font-bold text-xl text-primary leading-none">ALLIANCE</h1>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mt-1 font-medium">FURNISHING</p>
             </div>
           </Link>
 
