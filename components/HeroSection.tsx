@@ -29,11 +29,6 @@ export default function HeroSection() {
             transition={{ duration: 0.8 }}
             className="space-y-6 md:space-y-8 max-w-4xl"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Award Winning Studio 2024</span>
-            </div>
-
             <h1 className="font-serif text-4xl sm:text-7xl lg:text-9xl font-bold text-foreground leading-[1.2] md:leading-[0.95] tracking-tight max-w-[90%] mx-auto">
               Designing <span className="text-primary italic">Timeless</span> Interior Experiences.
             </h1>
