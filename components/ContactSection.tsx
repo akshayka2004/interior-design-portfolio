@@ -23,17 +23,34 @@ export default function ContactSection() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSubmitted(true)
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    })
-    setTimeout(() => setSubmitted(false), 5000)
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        })
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        console.error('Failed to submit form')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    }
   }
 
   const contactInfo = [
@@ -114,35 +131,32 @@ export default function ContactSection() {
                     onChange={handleChange}
                     required
                     className="w-full px-6 py-4 bg-secondary/30 border-none rounded-xl md:rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all outline-none text-base min-h-[48px]"
-                    placeholder="Enter your name"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Email Address</label>
+                  <label htmlFor="email" className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Email Address (Optional)</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
                     className="w-full px-6 py-4 bg-secondary/30 border-none rounded-xl md:rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all outline-none text-base min-h-[48px]"
-                    placeholder="hello@example.com"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Phone (Optional)</label>
+                  <label htmlFor="phone" className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Phone</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    required
                     className="w-full px-6 py-4 bg-secondary/30 border-none rounded-xl md:rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all outline-none text-base min-h-[48px]"
-                    placeholder="+1 (555) 000-0000"
                   />
                 </div>
                 <div className="space-y-2">
@@ -174,7 +188,6 @@ export default function ContactSection() {
                   required
                   rows={4}
                   className="w-full px-6 py-4 bg-secondary/30 border-none rounded-xl md:rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all outline-none resize-none text-base min-h-[120px]"
-                  placeholder="Tell us about your vision..."
                 />
               </div>
 
