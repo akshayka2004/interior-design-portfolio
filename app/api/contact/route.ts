@@ -3,10 +3,7 @@ import { NextResponse } from 'next/server'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    // Payload is already formatted in the frontend:
-    // { name, email, phone, interest, projectDetails }
 
-    // Google Apps Script Web App URL should be provided in environment variables
     const GOOGLE_SHEETS_WEB_APP_URL = process.env.GOOGLE_SHEETS_WEB_APP_URL
 
     if (!GOOGLE_SHEETS_WEB_APP_URL) {
@@ -17,7 +14,6 @@ export async function POST(request: Request) {
       )
     }
 
-    // Proxy the request to Google Apps Script
     const response = await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
       method: 'POST',
       headers: {
@@ -26,16 +22,17 @@ export async function POST(request: Request) {
       body: JSON.stringify(body),
     })
 
-    if (!response.ok) {
-      console.error(`Google Apps Script API Error: Status ${response.status}`)
+    const responseText = await response.text()
+    
+    // Google Apps Script usually returns 200 even for script errors. We check the content.
+    if (!response.ok || responseText.includes('Script function not found') || responseText.includes('<title>Error</title>')) {
+      console.error(`Google Apps Script API Error: Status ${response.status}`, responseText)
       return NextResponse.json(
-        { error: 'Failed to submit to Google Sheets' },
-        { status: response.status }
+        { error: 'Failed to submit to Google Sheets. Check Apps Script logs.' },
+        { status: 400 } // Send 400 so the frontend shows the error
       )
     }
 
-    // Google Apps Script may return varying JSON or text, depending on user's return ContentService.
-    // For safety, we just return success: true.
     return NextResponse.json({ success: true }, { status: 200 })
 
   } catch (error) {

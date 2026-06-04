@@ -59,6 +59,8 @@ export default function ContactSection() {
         })
         setTimeout(() => setSubmitted(false), 5000)
       } else {
+        const errorText = await response.text();
+        console.error('API Error:', response.status, response.statusText, errorText);
         setError('Something went wrong. Please try again.')
       }
     } catch (error) {
