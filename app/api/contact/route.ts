@@ -3,57 +3,43 @@ import { NextResponse } from 'next/server'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, phone, subject, message } = body
+    // Payload is already formatted in the frontend:
+    // { name, email, phone, interest, projectDetails }
 
-    const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY
-    const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID
-    const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME
+    // Google Apps Script Web App URL should be provided in environment variables
+    const GOOGLE_SHEETS_WEB_APP_URL = process.env.GOOGLE_SHEETS_WEB_APP_URL
 
-    if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME) {
-      console.error('Missing Airtable environment variables')
+    if (!GOOGLE_SHEETS_WEB_APP_URL) {
+      console.error('Missing GOOGLE_SHEETS_WEB_APP_URL environment variable')
       return NextResponse.json(
         { error: 'Server configuration error' },
         { status: 500 }
       )
     }
 
-    const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`
-
-    const response = await fetch(airtableUrl, {
+    // Proxy the request to Google Apps Script
+    const response = await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        records: [
-          {
-            fields: {
-              Name: name,
-              Email: email || '',
-              Phone: phone,
-              Subject: subject,
-              Message: message
-            }
-          }
-        ]
-      })
+      body: JSON.stringify(body),
     })
 
     if (!response.ok) {
-      const errorData = await response.json()
-      console.error('Airtable API Error:', errorData)
+      console.error(`Google Apps Script API Error: Status ${response.status}`)
       return NextResponse.json(
-        { error: 'Failed to submit to Airtable' },
+        { error: 'Failed to submit to Google Sheets' },
         { status: response.status }
       )
     }
 
-    const data = await response.json()
-    return NextResponse.json({ success: true, data }, { status: 200 })
+    // Google Apps Script may return varying JSON or text, depending on user's return ContentService.
+    // For safety, we just return success: true.
+    return NextResponse.json({ success: true }, { status: 200 })
 
   } catch (error) {
-    console.error('Error in contact API:', error)
+    console.error('Error in contact API proxy to Google Sheets:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

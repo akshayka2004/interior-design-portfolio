@@ -13,7 +13,9 @@ export default function ContactSection() {
     message: ''
   })
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -25,14 +27,25 @@ export default function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsSubmitting(true)
+    setError(null)
     
     try {
+      // Map frontend state to exact Google Sheets requirements
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        interest: formData.subject,
+        projectDetails: formData.message
+      }
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
 
       if (response.ok) {
@@ -46,10 +59,13 @@ export default function ContactSection() {
         })
         setTimeout(() => setSubmitted(false), 5000)
       } else {
-        console.error('Failed to submit form')
+        setError('Something went wrong. Please try again.')
       }
     } catch (error) {
       console.error('Error submitting form:', error)
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -116,7 +132,17 @@ export default function ContactSection() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="p-4 md:p-6 bg-primary/10 border border-primary/20 rounded-xl md:rounded-2xl text-primary font-bold text-center text-sm md:text-base"
                 >
-                  Message Sent Successfully! We&apos;ll be in touch soon.
+                  Request submitted successfully.
+                </motion.div>
+              )}
+              
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-4 md:p-6 bg-red-500/10 border border-red-500/20 rounded-xl md:rounded-2xl text-red-500 font-bold text-center text-sm md:text-base"
+                >
+                  {error}
                 </motion.div>
               )}
 
@@ -193,9 +219,14 @@ export default function ContactSection() {
 
               <button
                 type="submit"
-                className="w-full py-4 md:py-5 bg-primary text-primary-foreground rounded-xl md:rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-3 group min-h-[56px]"
+                disabled={isSubmitting}
+                className="w-full py-4 md:py-5 bg-primary text-primary-foreground rounded-xl md:rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-3 group min-h-[56px] disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Start Your Project <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                {isSubmitting ? 'Submitting...' : (
+                  <>
+                    Start Your Project <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </>
+                )}
               </button>
             </form>
           </motion.div>
